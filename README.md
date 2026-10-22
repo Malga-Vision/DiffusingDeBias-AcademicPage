@@ -46,3 +46,20 @@ Parts of this project page were adopted from the [Nerfies](https://nerfies.githu
 
 ## Website License
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+
+## Citation
+
+```bibtex
+@inproceedings{ciranni2025diffusing,
+  title={Diffusing DeBias: Synthetic Bias Amplification for Model Debiasing},
+  author={Ciranni, Massimiliano and Pastore, Vito Paolo and Di Via, Roberto and
+          Tartaglione, Enzo and Odone, Francesca and Murino, Vittorio},
+  booktitle={Advances in Neural Information Processing Systems},
+  editor={D. Belgrave and C. Zhang and H. Lin and R. Pascanu and P. Koniusz and M. Ghassemi and N. Chen},
+  volume={38},
+  pages={116778--116805},
+  publisher={Curran Associates, Inc.},
+  doi={10.52202/085713-3893},
+  year={2025}
+}
+```

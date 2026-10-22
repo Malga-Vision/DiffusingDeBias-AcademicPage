@@ -242,7 +242,7 @@
           "name": "Why train the Bias Amplifier on synthetic data instead of real data?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "In the NeurIPS 2025 paper, a Bias Amplifier trained on the real Waterbirds training set for 50 epochs memorized all bias-conflicting samples, leaving empty pseudo-groups; training it for one epoch gave only 79.43% worst-group accuracy with Recipe I, and 78.45% with Recipe II. Diffusion-generated images were rated bias-aligned in 98.35% (Waterbirds), 99.20% (BAR) and 99.70% (BFFHQ) of cases. On unbiased CIFAR-10, Diffusing DeBias does not hurt accuracy (84.16% vs. 83.26% for ERM)."
+            "text": "In the NeurIPS 2025 paper, a Bias Amplifier trained on the real Waterbirds training set for 50 epochs memorized all bias-conflicting samples, leaving empty pseudo-groups; training it for one epoch gave only 79.43% worst-group accuracy with Recipe I, and a frozen Bias Amplifier trained on real data gave 78.45% with Recipe II. Diffusion-generated images were rated bias-aligned in 98.35% (Waterbirds), 99.20% (BAR) and 99.70% (BFFHQ) of cases. On unbiased CIFAR-10, Diffusing DeBias does not hurt accuracy (84.16% vs. 83.26% for ERM)."
           }
         }
       ]
@@ -372,13 +372,7 @@
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              The effectiveness of deep learning models is often limited by spurious correlations present in training data. These biases lead models to rely on shortcut features rather than learning robust, generalizable representations. Existing debiasing methods typically require either explicit bias labels or sophisticated techniques to identify bias-conflicting samples, which can be unreliable or expensive.
-            </p>
-            <p>
-              We propose <b>Diffusing DeBias (DDB)</b>, a novel framework that exploits conditional diffusion probabilistic models (CDPM) to generate synthetic bias-aligned images. These synthetic samples are used to train a robust Bias Amplifier (BA) that deliberately learns to predict bias attributes without memorizing the scarce bias-conflicting examples present in real data. The trained BA can then be seamlessly integrated into both two-step and end-to-end unsupervised debiasing recipes.
-            </p>
-            <p>
-              DDB achieves state-of-the-art results on multiple popular biased benchmarks (Waterbirds, BFFHQ, BAR, ImageNet-9/A, UrbanCars) while maintaining competitive performance on unbiased test data, demonstrating its effectiveness and practical applicability.
+              The effectiveness of deep learning models in classification tasks is often challenged by the quality and quantity of training data whenever they are affected by strong spurious correlations between specific attributes and target labels. This results in a form of bias affecting training data, which typically leads to unrecoverable weak generalization in prediction. This paper addresses this problem by leveraging bias amplification with generated synthetic data only: we introduce Diffusing DeBias (DDB), a novel approach acting as a plug-in for common methods of unsupervised model debiasing, exploiting the inherent bias-learning tendency of diffusion models in data generation. Specifically, our approach adopts conditional diffusion models to generate synthetic bias-aligned images, which fully replace the original training set for learning an effective bias amplifier model to be subsequently incorporated into an end-to-end and a two-step unsupervised debiasing approach. By tackling the fundamental issue of bias-conflicting training samples’ memorization in learning auxiliary models, typical of this type of technique, our proposed method outperforms the current state-of-the-art in multiple benchmark datasets, demonstrating its potential as a versatile and effective tool for tackling bias in deep learning models. Code is available at <a href="https://github.com/Malga-Vision/DiffusingDeBias">https://github.com/Malga-Vision/DiffusingDeBias</a>.
             </p>
           </div>
         </div>
@@ -413,14 +407,14 @@
             </p>
             <ol style="text-align:left; margin-left:2rem;">
               <li><b>Trains a class-conditional diffusion model</b> on the biased training dataset</li>
-              <li><b>Generates synthetic bias-aligned images</b> by leveraging classifier-free guidance (CFG) with high guidance scale, which amplifies the dominant spurious correlations</li>
+              <li><b>Generates synthetic bias-aligned images</b> with classifier-free guidance (CFG): trained on data with strong spurious correlations, the diffusion model learns and amplifies the per-class biased distribution (guidance strength <i>w</i> = 1, the best value in the ablation)</li>
               <li><b>Trains the Bias Amplifier exclusively on synthetic data</b>, ensuring it learns to recognize bias patterns without memorizing real bias-conflicting examples</li>
-              <li><b>Integrates the BA into debiasing recipes</b> (Recipe I: two-step with GroupDRO; Recipe II: end-to-end with LfF-style reweighting)</li>
+              <li><b>Integrates the BA into debiasing recipes</b> (Recipe I: two-step, bias pseudo-labels for GroupDRO; Recipe II: end-to-end, LfF-style reweighting with the frozen BA)</li>
             </ol>
             
             <h3 class="title is-4" style="margin-top:1.5rem;">Why This Works</h3>
             <p>
-              By training on <b>purely synthetic bias-aligned data</b>, the Bias Amplifier learns a clean decision boundary that separates bias-aligned from bias-conflicting samples based on bias attributes alone. This avoids the common pitfall where bias models trained on real data learn to identify individual bias-conflicting samples, leading to poor generalization when used for debiasing.
+              Since the Bias Amplifier is trained on <b>purely synthetic bias-aligned data</b> and does not see the original training set at all, bias-conflicting sample overfitting and interference are avoided by construction. Auxiliary models trained on real data instead tend to memorize the few bias-conflicting samples within very few epochs, failing to provide different learning signals for bias-aligned and bias-conflicting samples.
             </p>
           </div>
         </div>
@@ -441,7 +435,7 @@
         <div class="column">
           <img src="static/images/synthetic2_web.jpg" width="2400" height="653" loading="lazy" alt="Synthetic bias-aligned images generated by the Diffusing DeBias diffusion model for Waterbirds, BFFHQ, BAR, ImageNet-9 and UrbanCars" style="width:100%; height:auto">
           <p class="has-text-centered" style="margin-top:0.5rem; font-size:0.9rem; color:#666;">
-            <b>Figure 3:</b> Examples of synthetic bias-aligned images generated by our conditional diffusion model with high CFG scale. These images strongly exhibit the spurious correlations present in the training data (e.g., waterbirds on water backgrounds, landbirds on land backgrounds).
+            <b>Figure 3:</b> Examples of synthetic bias-aligned images across multiple datasets. Each grid shows synthetic images for specific classes across biased datasets, revealing how the model aligns with dataset-specific biases in different contexts.
           </p>
         </div>
       </div>
@@ -450,7 +444,7 @@
         <div class="column is-four-fifths">
           <div class="content has-text-justified">
             <p>
-              The synthetic images capture and amplify the dataset's bias patterns. For instance, in Waterbirds, the diffusion model learns that "waterbirds" are strongly associated with "water backgrounds" and "landbirds" with "land backgrounds." By using high classifier-free guidance scale during sampling, we generate images that exclusively follow these spurious correlations.
+              The generated samples maintain good fidelity and capture the typical bias patterns of each training set per class. Three independent annotators verified the presence of the bias in each synthetic sample: the average bias-aligned proportion is 98.35% for Waterbirds, 99.20% for BAR and 99.70% for BFFHQ, all higher than the known proportions of bias in the original datasets. On Waterbirds, BLIP-2 captions of the generated images show, together with the object class (<i>bird</i>), frequent bias-attribute words (<i>land</i>, <i>water</i>).
             </p>
           </div>
         </div>
@@ -472,14 +466,14 @@
           <h3 class="title is-5">Recipe I: Two-Step Debiasing</h3>
           <img src="static/images/groupdro_web.jpg" width="1600" height="811" loading="lazy" alt="Diffusing DeBias Recipe I: the Bias Amplifier error set gives pseudo-groups used to train the target model with GroupDRO" style="width:100%; height:auto">
           <p class="has-text-centered" style="margin-top:0.5rem; font-size:0.85rem; color:#666;">
-            <b>Figure 4:</b> Recipe I uses the BA to create pseudo-groups, then trains a target model with GroupDRO for robust worst-group performance.
+            <b>Figure 4:</b> Recipe I uses the BA to estimate bias pseudo-labels on the real training data, then trains the target model with GroupDRO.
           </p>
         </div>
         <div class="column is-half">
           <h3 class="title is-5">Recipe II: End-to-End Debiasing</h3>
           <img src="static/images/end2end_web.jpg" width="1600" height="621" loading="lazy" alt="Diffusing DeBias Recipe II: end-to-end LfF-style debiasing where Bias Amplifier losses reweight training samples for the target model" style="width:100%; height:auto">
           <p class="has-text-centered" style="margin-top:0.5rem; font-size:0.85rem; color:#666;">
-            <b>Figure 5:</b> Recipe II jointly trains the BA and target model end-to-end with sample reweighting based on BA predictions.
+            <b>Figure 5:</b> Recipe II replaces the GCE-trained biased model of LfF with the frozen BA, whose per-sample losses reweight the target model loss.
           </p>
         </div>
       </div>
@@ -488,10 +482,10 @@
         <div class="column is-four-fifths">
           <div class="content has-text-justified">
             <p>
-              <b>Recipe I (Two-Step)</b>: First train the BA on synthetic data, use it to predict bias attributes for real samples and create pseudo-groups (class × bias), then train a target classifier using GroupDRO to optimize worst-group accuracy.
+              <b>Recipe I (Two-Step)</b>: The BA, trained on synthetic data, is run in inference on the real training set. Samples it misclassifies, and whose loss is above the mean training loss plus <i>&gamma;</i> standard deviations, are marked as bias-conflicting; the others as bias-aligned. These bias pseudo-labels are used as group information for GroupDRO, which trains the debiased target model.
             </p>
             <p>
-              <b>Recipe II (End-to-End)</b>: Jointly train the BA and target model, where the BA provides per-sample weights that upweight bias-conflicting samples during target model training, following an LfF-style approach.
+              <b>Recipe II (End-to-End)</b>: Following the Learning from Failure (LfF) scheme, the GCE-trained biased model is replaced with the BA, which is frozen and only used in inference to compute its loss on each real training sample. The target model's CE loss is reweighted by <i>r</i> = <i>L</i><sub>BA</sub> / (<i>L</i><sub>debiasing</sub> + <i>L</i><sub>BA</sub>), which should be low for bias-aligned and high for bias-conflicting samples.
             </p>
           </div>
         </div>
@@ -515,11 +509,11 @@
               We evaluate DDB on five popular biased benchmarks with different types of spurious correlations:
             </p>
             <ul style="text-align:left; margin-left:2rem;">
-              <li><b>Waterbirds</b>: Birds on correlated backgrounds (water vs. land)</li>
-              <li><b>BFFHQ</b>: Face gender classification with age bias</li>
-              <li><b>BAR</b>: Actions correlated with specific backgrounds</li>
-              <li><b>ImageNet-9/A</b>: Natural image classification with background bias</li>
-              <li><b>UrbanCars</b>: Vehicle co-occurrences in urban scenes</li>
+              <li><b>Waterbirds</b>: bird species correlated with backgrounds (water vs. land), &rho; = 0.950</li>
+              <li><b>BFFHQ</b>: face age classification (young vs. old) with gender bias, &rho; = 0.995</li>
+              <li><b>BAR</b>: six actions associated with stereotypical contexts, no bias annotations</li>
+              <li><b>ImageNet-9/A</b>: training on ImageNet-9 (textural and shape biases), testing on ImageNet-A</li>
+              <li><b>UrbanCars</b>: urban vs. country cars with two shortcuts, background and co-occurring objects</li>
             </ul>
           </div>
         </div>
@@ -528,20 +522,44 @@
       <!-- Results Tables -->
       <div class="columns is-centered" style="margin-top:2rem;">
         <div class="column">
-          <h3 class="title is-4 has-text-centered">Main Results: Recipe I (Two-Step)</h3>
+          <h3 class="title is-4 has-text-centered">Main Results: Waterbirds and BAR</h3>
           <img src="static/images/table1.png" width="1261" height="634" loading="lazy" alt="Results table: Diffusing DeBias worst-group accuracy on Waterbirds and average accuracy on BAR compared with unsupervised debiasing methods" style="width:100%; height:auto">
           <p class="has-text-centered" style="margin-top:0.5rem; font-size:0.9rem; color:#666;">
-            <b>Table 1:</b> Comparison with state-of-the-art unsupervised debiasing methods using Recipe I (GroupDRO-based two-step approach). DDB achieves the best worst-group accuracy across all benchmarks.
+            <b>Table 1:</b> Results of DDB Recipes I and II on Waterbirds (left, worst-group accuracy) and BAR (right, average accuracy). Ticks mark bias-unsupervised methods. Best unsupervised results are in bold; second-best are underlined.
           </p>
         </div>
       </div>
 
       <div class="columns is-centered" style="margin-top:2rem;">
         <div class="column">
-          <h3 class="title is-4 has-text-centered">Main Results: Recipe II (End-to-End)</h3>
+          <h3 class="title is-4 has-text-centered">Main Results: BFFHQ and ImageNet-9/A</h3>
           <img src="static/images/table2.png" width="1260" height="552" loading="lazy" alt="Results table: Diffusing DeBias average and bias-conflicting accuracy on BFFHQ and average accuracy on ImageNet-A compared with unsupervised debiasing methods" style="width:100%; height:auto">
           <p class="has-text-centered" style="margin-top:0.5rem; font-size:0.9rem; color:#666;">
-            <b>Table 2:</b> Results using Recipe II (end-to-end LfF-style training). DDB consistently outperforms baseline methods on bias-conflicting samples while maintaining strong average performance.
+            <b>Table 2:</b> Results of DDB Recipes I and II on BFFHQ (left, average and bias-conflicting accuracy) and ImageNet-9/A (right, average accuracy on ImageNet-A). Ticks mark bias-unsupervised methods. Best unsupervised results are in bold; second-best are underlined.
+          </p>
+        </div>
+      </div>
+
+      <div class="columns is-centered" style="margin-top:2rem;">
+        <div class="column">
+          <h3 class="title is-4 has-text-centered">Main Results: UrbanCars (multiple shortcuts)</h3>
+          <div class="table-container">
+          <table class="table is-narrow is-fullwidth" style="font-size:0.9rem;">
+            <thead><tr><th>Method</th><th>ID.ACC &uarr;</th><th>BG-Gap &darr;</th><th>CoObj-Gap &darr;</th><th>BG-CoObj-Gap &darr;</th></tr></thead>
+            <tbody>
+              <tr><td>GroupDRO</td><td>91.60</td><td>10.90</td><td>3.60</td><td>16.40</td></tr>
+              <tr><td>LLE</td><td>96.70</td><td><u>2.10</u></td><td><u>2.70</u></td><td><u>5.90</u></td></tr>
+              <tr><td>LfF</td><td><u>97.20</u></td><td>11.60</td><td>18.40</td><td>63.20</td></tr>
+              <tr><td>JTT</td><td>95.90</td><td>8.10</td><td>13.30</td><td>40.10</td></tr>
+              <tr><td>EIIL</td><td>95.50</td><td>4.20</td><td>24.70</td><td>44.90</td></tr>
+              <tr><td>DebiAN</td><td><u>98.00</u></td><td>14.90</td><td>10.50</td><td>69.00</td></tr>
+              <tr><td>DDB-I (ours)</td><td>86.39 &plusmn; 0.74</td><td><b>1.85</b> &plusmn; 3.21</td><td><b>0.52</b> &plusmn; 1.38</td><td><b>0.12</b> &plusmn; 1.56</td></tr>
+              <tr><td>DDB-II (ours)</td><td><b>98.56</b> &plusmn; 0.92</td><td>2.30 &plusmn; 0.60</td><td>11.10 &plusmn; 1.20</td><td>46.70 &plusmn; 2.42</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p class="has-text-centered" style="margin-top:0.5rem; font-size:0.9rem; color:#666;">
+            <b>Table 3:</b> Comparison on the UrbanCars biased dataset. ID.ACC is in-distribution accuracy (the higher, the better); the other three metrics show the accuracy gap between each minority group and ID.ACC (the lower, the better). GroupDRO and LLE are listed first as they rely on bias information.
           </p>
         </div>
       </div>
@@ -551,11 +569,12 @@
           <div class="content has-text-justified">
             <h3 class="title is-4">Key Findings</h3>
             <ul style="text-align:left; margin-left:2rem;">
-              <li><b>State-of-the-art performance</b>: DDB achieves the best worst-group accuracy compared to other unsupervised debiasing methods across all benchmarks</li>
-              <li><b>Synthetic data is crucial</b>: Training the BA on synthetic data significantly outperforms training on real data, confirming our hypothesis about avoiding memorization</li>
-              <li><b>Efficient synthesis</b>: Only 1,000-2,000 synthetic images per class are needed for effective debiasing</li>
-              <li><b>CFG scale matters</b>: Higher CFG guidance scales (7-15) produce more strongly bias-aligned samples, leading to better BA performance</li>
-              <li><b>No degradation on unbiased data</b>: DDB maintains competitive performance on unbiased test sets, showing it doesn't sacrifice general accuracy</li>
+              <li><b>State-of-the-art performance</b>: both DDB recipes show state-of-the-art results across all benchmarks; on Waterbirds, DDB-II (91.56% worst-group accuracy) is above all unsupervised methods and the supervised GroupDRO (91.40%)</li>
+              <li><b>Synthetic data is crucial</b>: on Waterbirds, a BA trained on real data memorized all bias-conflicting samples in 50 epochs (empty pseudo-label groups) and reached only 79.43% WGA when trained for one epoch (Recipe I); with Recipe II it gave 78.45%</li>
+              <li><b>Bias Amplifier data</b>: all main results use 1,000 synthetic images per class; even 100 synthetic images are enough for good debiasing performance</li>
+              <li><b>Limited impact of CFG strength</b>: on Waterbirds (Recipe I), WGA ranges from 87.85% to 90.81% for guidance strength <i>w</i> &isin; {0, 1, 2, 3, 5}, with the best result at <i>w</i> = 1</li>
+              <li><b>Bias identification</b>: the BA identifies bias-aligned and bias-conflicting training samples with 89.00% accuracy on Waterbirds and 96.00% on BFFHQ</li>
+              <li><b>No degradation on unbiased data</b>: on CIFAR-10, Recipe I gives 84.16% test accuracy vs. 83.26% for ERM with the same ResNet-18</li>
             </ul>
           </div>
         </div>
@@ -577,10 +596,10 @@
           <div class="content has-text-justified">
             <div class="box" style="background-color: #f8f9fa; border-left: 4px solid #3273dc;">
               <ol style="text-align:left; margin-left:1rem; line-height:1.8;">
-                <li><b>Novel synthetic bias amplification approach</b>: First method to use conditional diffusion models to generate bias-aligned synthetic data for training bias models</li>
+                <li><b>Synthetic bias amplification</b>: conditional diffusion models learn the per-class bias-aligned distributions of biased datasets with unknown bias information, and their synthetic bias-aligned images train a robust Bias Amplifier</li>
                 <li><b>Memorization-free Bias Amplifier</b>: By training exclusively on synthetic data, we avoid memorizing bias-conflicting real samples, leading to better generalization</li>
                 <li><b>Plug-and-play framework</b>: DDB can be integrated into various debiasing recipes (both two-step and end-to-end approaches)</li>
-                <li><b>State-of-the-art results</b>: Superior performance on five challenging benchmarks while maintaining competitiveness on unbiased data</li>
+                <li><b>State-of-the-art results</b>: on popular benchmarks with single or multiple biases, without degrading performance on unbiased data</li>
                 <li><b>Comprehensive analysis</b>: Extensive ablations studying CFG scale, synthetic data quantity, and comparison with real-data training</li>
               </ol>
             </div>
@@ -603,7 +622,7 @@
           <h3 class="title is-5" style="margin-top:1.2rem;">How well does Diffusing DeBias perform?</h3>
           <p>On Waterbirds, DDB-II reaches 91.56% worst-group accuracy, above all unsupervised methods and the supervised GroupDRO (91.40%). On BAR, DDB-II reaches 72.81% average accuracy, 2.93 points above DebiAN. On BFFHQ, DDB-I reaches 74.67% bias-conflicting accuracy against 73.60% for ETF-Debias, and on ImageNet-A DDB-I reaches 39.80% average accuracy.</p>
           <h3 class="title is-5" style="margin-top:1.2rem;">Why train the Bias Amplifier on synthetic data instead of real data?</h3>
-          <p>In the NeurIPS 2025 paper, a Bias Amplifier trained on the real Waterbirds training set for 50 epochs memorized all bias-conflicting samples, leaving empty pseudo-groups; training it for one epoch gave only 79.43% worst-group accuracy with Recipe I, and 78.45% with Recipe II. Diffusion-generated images were rated bias-aligned in 98.35% (Waterbirds), 99.20% (BAR) and 99.70% (BFFHQ) of cases. On unbiased CIFAR-10, Diffusing DeBias does not hurt accuracy (84.16% vs. 83.26% for ERM).</p>
+          <p>In the NeurIPS 2025 paper, a Bias Amplifier trained on the real Waterbirds training set for 50 epochs memorized all bias-conflicting samples, leaving empty pseudo-groups; training it for one epoch gave only 79.43% worst-group accuracy with Recipe I, and a frozen Bias Amplifier trained on real data gave 78.45% with Recipe II. Diffusion-generated images were rated bias-aligned in 98.35% (Waterbirds), 99.20% (BAR) and 99.70% (BFFHQ) of cases. On unbiased CIFAR-10, Diffusing DeBias does not hurt accuracy (84.16% vs. 83.26% for ERM).</p>
     </div>
   </section>
 
