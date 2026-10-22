@@ -1,0 +1,35 @@
+# Diffusing DeBias (NeurIPS 2025)
+
+> Diffusing DeBias: Synthetic Bias Amplification for Model Debiasing. Massimiliano Ciranni, Vito Paolo Pastore, Roberto Di Via, Enzo Tartaglione, Francesca Odone, Vittorio Murino (MaLGa-DIBRIS, University of Genoa; AI for Good (AIGO), Istituto Italiano di Tecnologia; Télécom Paris; University of Verona). Advances in Neural Information Processing Systems 38 (NeurIPS 2025), pp. 116778-116805, DOI 10.52202/085713-3893.
+
+Diffusing DeBias (DDB) is a plug-in for unsupervised model debiasing in image classification. A class-conditional diffusion model with classifier-free guidance is trained on the biased training set and used to generate synthetic bias-aligned images, which fully replace the real training set for training a Bias Amplifier. Since the Bias Amplifier never sees real data, it cannot memorize the scarce bias-conflicting training samples. The Bias Amplifier is plugged into a two-step recipe (Recipe I, pseudo-groups for GroupDRO) and an end-to-end recipe (Recipe II, LfF-style loss-based reweighting).
+
+Key results (mean over three runs):
+- Waterbirds: 91.56% worst-group accuracy (DDB-II), above all unsupervised methods and the supervised GroupDRO (91.40%).
+- BAR: 72.81% average accuracy (DDB-II), 2.93 points above DebiAN.
+- BFFHQ: 74.67% bias-conflicting accuracy (DDB-I) vs. 73.60% for ETF-Debias.
+- ImageNet-9/A: 39.80% average accuracy on ImageNet-A (DDB-I).
+- UrbanCars (multiple shortcuts): DDB-I gaps of 1.85 (BG), 0.52 (CoObj) and 0.12 (BG+CoObj).
+- A Bias Amplifier trained on real Waterbirds data instead memorizes all bias-conflicting samples (50 epochs) or reaches only 79.43% WGA (1 epoch, Recipe I).
+- On unbiased CIFAR-10, DDB gives 84.16% vs. 83.26% for ERM.
+
+## Links
+- [Paper (NeurIPS proceedings)](https://proceedings.neurips.cc/paper_files/paper/2025/hash/a982938f457eafffedc3205c46b4bac7-Abstract-Conference.html)
+- [Paper PDF](https://proceedings.neurips.cc/paper_files/paper/2025/file/a982938f457eafffedc3205c46b4bac7-Paper-Conference.pdf)
+- [arXiv:2502.09564](https://arxiv.org/abs/2502.09564)
+- [OpenReview](https://openreview.net/forum?id=66Z5tS8E45)
+- [Project page](https://malga-vision.github.io/DiffusingDeBias-AcademicPage/)
+- [Code](https://github.com/Malga-Vision/DiffusingDeBias)
+
+## Citation
+@inproceedings{ciranni2025diffusing,
+  title     = {Diffusing DeBias: Synthetic Bias Amplification for Model Debiasing},
+  author    = {Ciranni, Massimiliano and Pastore, Vito Paolo and Di Via, Roberto and Tartaglione, Enzo and Odone, Francesca and Murino, Vittorio},
+  booktitle = {Advances in Neural Information Processing Systems},
+  editor    = {D. Belgrave and C. Zhang and H. Lin and R. Pascanu and P. Koniusz and M. Ghassemi and N. Chen},
+  volume    = {38},
+  pages     = {116778--116805},
+  publisher = {Curran Associates, Inc.},
+  doi       = {10.52202/085713-3893},
+  year      = {2025}
+}
