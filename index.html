@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Diffusing DeBias: Synthetic Bias Amplification (NeurIPS 2025)</title>
@@ -252,423 +254,277 @@
 }
   </script>
 
-  <link rel="icon" type="image/svg+xml" href="static/images/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="static/css/bulma.min.css">
-  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="static/css/index.css">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="static/js/fontawesome.all.min.js"></script>
-  <script src="static/js/bulma-carousel.min.js"></script>
-  <script src="static/js/bulma-slider.min.js"></script>
-  <script src="static/js/index.js"></script>
+  <link rel="icon" type="image/svg+xml" href="static/malga/img/malga-mark.svg">
+  <link rel="stylesheet" href="static/malga/malga.css">
+  <script src="static/malga/malga.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <section class="hero">
-    <div class="hero-body">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title" style="font-size: 40px;">
-              Diffusing DeBias:<br>
-              Synthetic Bias Amplification for Model Debiasing
-            </h1>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="site-header__logo" href="https://malga.unige.it/" target="_blank" rel="noopener noreferrer">
+        <img src="static/malga/img/malga-logo.svg" width="231" height="71" alt="MaLGa, Machine Learning Genoa Center">
+      </a>
+      <nav class="site-nav" aria-label="Sections">
+        <a href="#abstract">Abstract</a>
+        <a href="#highlights">Contributions</a>
+        <a href="#method">Method</a>
+        <a href="#recipes">Recipes</a>
+        <a href="#results">Results</a>
+        <a href="#media">Poster</a>
+        <a href="#faq">FAQ</a>
+        <a href="#cite">Cite</a>
+      </nav>
+    </div>
+  </header>
 
-            <div class="is-size-5 publication-authors">
-              <span class="author-block">
-                <a href="https://scholar.google.com/citations?hl=it&user=QNADVI8AAAAJ" target="_blank">Massimiliano Ciranni</a><sup>1*</sup>,</span>
-              <span class="author-block">
-                <a href="https://scholar.google.com/citations?user=-boYCXcAAAAJ&hl=it" target="_blank">Vito Paolo Pastore</a><sup>1,2*</sup>,</span>
-              <span class="author-block">
-                <a href="https://scholar.google.com/citations?user=qGS6cv4AAAAJ" target="_blank">Roberto Di Via</a><sup>1*</sup>,</span>
-              <span class="author-block">
-                <a href="https://scholar.google.com/citations?hl=it&user=uKuvN64AAAAJ" target="_blank">Enzo Tartaglione</a><sup>3</sup>,</span>
-              <span class="author-block">
-                <a href="https://scholar.google.com/citations?user=riK7DscAAAAJ&hl=it" target="_blank">Francesca Odone</a><sup>1</sup>,</span>
-              <span class="author-block">
-                <a href="https://scholar.google.com/citations?hl=it&user=yV3_PTkAAAAJ" target="_blank">Vittorio Murino</a><sup>2,4</sup>
-              </span>
-            </div>
+  <main id="main">
+    <section class="hero">
+      <div class="wrap">
+        <p class="hero__venue"><em>NeurIPS 2025</em> Main Conference, Poster</p>
+        <h1>
+          <span class="hero__acronym">Diffusing DeBias</span>
+          <span class="hero__title">Synthetic Bias Amplification for Model Debiasing</span>
+        </h1>
+        <p class="authors">
+          <a href="https://scholar.google.com/citations?hl=it&amp;user=QNADVI8AAAAJ" target="_blank" rel="noopener noreferrer">Massimiliano Ciranni</a><sup>1*</sup>,
+          <a href="https://scholar.google.com/citations?user=-boYCXcAAAAJ&amp;hl=it" target="_blank" rel="noopener noreferrer">Vito Paolo Pastore</a><sup>1,2*</sup>,
+          <a href="https://scholar.google.com/citations?user=qGS6cv4AAAAJ" target="_blank" rel="noopener noreferrer">Roberto Di Via</a><sup>1*</sup>,
+          <a href="https://scholar.google.com/citations?hl=it&amp;user=uKuvN64AAAAJ" target="_blank" rel="noopener noreferrer">Enzo Tartaglione</a><sup>3</sup>,
+          <a href="https://scholar.google.com/citations?user=riK7DscAAAAJ&amp;hl=it" target="_blank" rel="noopener noreferrer">Francesca Odone</a><sup>1</sup>,
+          <a href="https://scholar.google.com/citations?hl=it&amp;user=yV3_PTkAAAAJ" target="_blank" rel="noopener noreferrer">Vittorio Murino</a><sup>2,4</sup>
+        </p>
+        <p class="affiliations">
+          <span><sup>1</sup>MaLGa-DIBRIS, University of Genoa, Italy</span>
+          <span><sup>2</sup>AI for Good (AIGO), Istituto Italiano di Tecnologia, Genova, Italy</span>
+          <span><sup>3</sup>Telecom-Paris / École Polytechnique, France</span>
+          <span><sup>4</sup>Dept. of Computer Science, University of Verona, Italy</span>
+        </p>
+        <p class="author-note">* equal contributions</p>
+        <ul class="links">
+          <li><a class="button button--primary" href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/a982938f457eafffedc3205c46b4bac7-Abstract-Conference.html" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="static/malga/img/icons.svg#i-paper"/></svg>Paper (NeurIPS)</a></li>
+          <li><a class="button" href="https://arxiv.org/abs/2502.09564" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="static/malga/img/icons.svg#i-preprint"/></svg>arXiv</a></li>
+          <li><a class="button" href="static/pdfs/DiffusingDeBias_NeurIPS2025_Poster.pdf" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="static/malga/img/icons.svg#i-poster"/></svg>Poster (PDF)</a></li>
+          <li><a class="button" href="https://github.com/Malga-Vision/DiffusingDeBias" target="_blank" rel="noopener noreferrer"><svg class="icon icon--fill" aria-hidden="true"><use href="static/malga/img/icons.svg#i-github"/></svg>Code</a></li>
+          <li><a class="button" href="#cite"><svg class="icon" aria-hidden="true"><use href="static/malga/img/icons.svg#i-cite"/></svg>BibTeX</a></li>
+        </ul>
+      </div>
+    </section>
 
-            <div class="is-size-5 publication-authors">
-              <br>* equal contributions <br><br>
-              <span class="author-block">
-                <sup>1</sup>MaLGa-DIBRIS, University of Genoa, Italy &nbsp;
-                <sup>2</sup>AI for Good (AIGO), Istituto Italiano di Tecnologia, Genova, Italy &nbsp;
-                <sup>3</sup>Telecom-Paris / École Polytechnique, France &nbsp;
-                <sup>4</sup>Dept. of Computer Science, University of Verona, Italy
-              </span>
-            </div>
+    <section class="teaser" aria-label="Teaser">
+      <div class="wrap">
+        <figure class="figure">
+          <div class="figure__frame">
+            <img src="static/images/teaser_web.jpg" width="2000" height="918" alt="Diffusing DeBias overview: (a) a bias amplifier trained on a real biased dataset memorizes bias-conflicting samples; (b) a diffusion model generates synthetic bias-aligned images so the bias amplifier never sees real data">
+          </div>
+          <figcaption><strong>Figure 1.</strong> Comparison of bias amplifier training approaches. (a) Traditional methods that use real biased datasets lead to the memorization of bias-conflicting samples, resulting in suboptimal auxiliary models. (b) Our proposed approach leverages conditional diffusion models to learn class-specific biases and amplify them into synthetic images. Such generations can replace the original training set for learning an effective <i>Bias Amplifier</i>, eliminating memorization effects by avoiding exposure to real data.</figcaption>
+        </figure>
+        <p class="tldr">We introduce <b>Diffusing DeBias (DDB)</b>, a plug-in debiasing framework that leverages conditional diffusion models to generate synthetic bias-aligned images and train a robust Bias Amplifier for unsupervised model debiasing.</p>
+      </div>
+    </section>
 
-            <div class="column has-text-centered" style="margin-top:1rem;">
-              <div class="publication-links">
-                <span class="link-block">
-                  <a href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/a982938f457eafffedc3205c46b4bac7-Abstract-Conference.html" target="_blank" class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                    <span>Paper (NeurIPS)</span>
-                  </a>
-                </span>
-                <span class="link-block">
-                  <a href="https://arxiv.org/abs/2502.09564" target="_blank" class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon"><i class="ai ai-arxiv"></i></span>
-                    <span>arXiv</span>
-                  </a>
-                </span>
-                <span class="link-block">
-                  <a href="static/pdfs/DiffusingDeBias_NeurIPS2025_Poster.pdf" target="_blank" class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                    <span>Poster (PDF)</span>
-                  </a>
-                </span>
-                <span class="link-block">
-                  <a href="https://github.com/Malga-Vision/DiffusingDeBias" target="_blank" class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon"><i class="fab fa-github"></i></span>
-                    <span>Code</span>
-                  </a>
-                </span>
+    <section class="section" id="abstract">
+      <div class="wrap">
+        <h2 class="section__title">Abstract</h2>
+        <div class="prose abstract">
+          <p>The effectiveness of deep learning models in classification tasks is often challenged by the quality and quantity of training data whenever they are affected by strong spurious correlations between specific attributes and target labels. This results in a form of bias affecting training data, which typically leads to unrecoverable weak generalization in prediction. This paper addresses this problem by leveraging bias amplification with generated synthetic data only: we introduce Diffusing DeBias (DDB), a novel approach acting as a plug-in for common methods of unsupervised model debiasing, exploiting the inherent bias-learning tendency of diffusion models in data generation. Specifically, our approach adopts conditional diffusion models to generate synthetic bias-aligned images, which fully replace the original training set for learning an effective bias amplifier model to be subsequently incorporated into an end-to-end and a two-step unsupervised debiasing approach. By tackling the fundamental issue of bias-conflicting training samples’ memorization in learning auxiliary models, typical of this type of technique, our proposed method outperforms the current state-of-the-art in multiple benchmark datasets, demonstrating its potential as a versatile and effective tool for tackling bias in deep learning models. Code is available at <a href="https://github.com/Malga-Vision/DiffusingDeBias">https://github.com/Malga-Vision/DiffusingDeBias</a>.</p>
+        </div>
+      </div>
+    </section>
 
-                <span class="link-block">
-                  <a href="#" target="_blank" class="external-link button is-normal is-rounded is-dark" onclick="alert('Accepted at: NeurIPS 2025 (Main Conference, Poster)');return false;">
-                    <span class="icon"><i class="fas fa-calendar-check"></i></span>
-                    <span>NeurIPS 2025 — Main Conference</span>
-                  </a>
-                </span>
+    <section class="section section--alt" id="highlights">
+      <div class="wrap">
+        <h2 class="section__title">Key contributions</h2>
+        <ul class="highlights">
+          <li><h3>Synthetic bias amplification</h3><p>Conditional diffusion models learn the per-class bias-aligned distributions of biased datasets with unknown bias information, and their synthetic bias-aligned images train a robust Bias Amplifier</p></li>
+          <li><h3>Memorization-free Bias Amplifier</h3><p>By training exclusively on synthetic data, we avoid memorizing bias-conflicting real samples, leading to better generalization</p></li>
+          <li><h3>Plug-and-play framework</h3><p>DDB can be integrated into various debiasing recipes (both two-step and end-to-end approaches)</p></li>
+          <li><h3>State-of-the-art results</h3><p>On popular benchmarks with single or multiple biases, without degrading performance on unbiased data</p></li>
+          <li><h3>Comprehensive analysis</h3><p>Extensive ablations studying CFG scale, synthetic data quantity, and comparison with real-data training</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="method">
+      <div class="wrap">
+        <h2 class="section__title">Method overview</h2>
+        <figure class="figure">
+          <div class="figure__frame">
+            <img src="static/images/pipeline2_web.jpg" width="2400" height="565" loading="lazy" alt="Diffusing DeBias pipeline: a conditional diffusion model with classifier-free guidance generates synthetic bias-aligned images, a Bias Amplifier is trained on them and then used in a two-step or end-to-end debiasing recipe">
+          </div>
+          <figcaption><strong>Figure 2.</strong> Schematic representation of our DDB framework. The debiasing process consists of two key steps: (A) <i>Diffusing the Bias</i> uses a conditional diffusion model with classifier-free guidance to generate synthetic images that preserve training dataset biases, and (B) employs a <i>Bias Amplifier</i> firstly trained on such synthetic data, and subsequently used during inference to extract supervisory bias signals from real images. These signals are used to guide the training process of a target debiased model by designing two <i>debiasing recipes</i> (i.e., 2-step and end-to-end methods).</figcaption>
+        </figure>
+        <div class="prose">
+          <h3>Key innovation: synthetic bias amplification</h3>
+          <p>The core idea of DDB is to <b>avoid training the Bias Amplifier on real data</b>. Traditional approaches train bias models on the real training set, which leads to memorization of bias-conflicting samples—the very samples we want to upweight during debiasing. Instead, DDB:</p>
+          <ol>
+            <li><b>Trains a class-conditional diffusion model</b> on the biased training dataset</li>
+            <li><b>Generates synthetic bias-aligned images</b> with classifier-free guidance (CFG): trained on data with strong spurious correlations, the diffusion model learns and amplifies the per-class biased distribution (guidance strength <i>w</i> = 1, the best value in the ablation)</li>
+            <li><b>Trains the Bias Amplifier exclusively on synthetic data</b>, ensuring it learns to recognize bias patterns without memorizing real bias-conflicting examples</li>
+            <li><b>Integrates the BA into debiasing recipes</b> (Recipe I: two-step, bias pseudo-labels for GroupDRO; Recipe II: end-to-end, LfF-style reweighting with the frozen BA)</li>
+          </ol>
+
+          <h3>Why this works</h3>
+          <p>Since the Bias Amplifier is trained on <b>purely synthetic bias-aligned data</b> and does not see the original training set at all, bias-conflicting sample overfitting and interference are avoided by construction. Auxiliary models trained on real data instead tend to memorize the few bias-conflicting samples within very few epochs, failing to provide different learning signals for bias-aligned and bias-conflicting samples.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="samples">
+      <div class="wrap">
+        <h2 class="section__title">Synthetic bias-aligned samples</h2>
+        <figure class="figure">
+          <div class="figure__frame">
+            <img src="static/images/synthetic2_web.jpg" width="2400" height="653" loading="lazy" alt="Synthetic bias-aligned images generated by the Diffusing DeBias diffusion model for Waterbirds, BFFHQ, BAR, ImageNet-9 and UrbanCars">
+          </div>
+          <figcaption><strong>Figure 3.</strong> Examples of synthetic bias-aligned images across multiple datasets. Each grid shows synthetic images for specific classes across biased datasets, revealing how the model aligns with dataset-specific biases in different contexts.</figcaption>
+        </figure>
+        <div class="prose">
+          <p>The generated samples maintain good fidelity and capture the typical bias patterns of each training set per class. Three independent annotators verified the presence of the bias in each synthetic sample: the average bias-aligned proportion is 98.35% for Waterbirds, 99.20% for BAR and 99.70% for BFFHQ, all higher than the known proportions of bias in the original datasets. On Waterbirds, BLIP-2 captions of the generated images show, together with the object class (<i>bird</i>), frequent bias-attribute words (<i>land</i>, <i>water</i>).</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="recipes">
+      <div class="wrap">
+        <h2 class="section__title">Integration with debiasing recipes</h2>
+        <div class="figure-grid">
+          <div>
+            <h3>Recipe I: two-step debiasing</h3>
+            <figure class="figure">
+              <div class="figure__frame">
+                <img src="static/images/groupdro_web.jpg" width="1600" height="811" loading="lazy" alt="Diffusing DeBias Recipe I: the Bias Amplifier error set gives pseudo-groups used to train the target model with GroupDRO">
               </div>
-            </div>
+              <figcaption><strong>Figure 4.</strong> Recipe I uses the BA to estimate bias pseudo-labels on the real training data, then trains the target model with GroupDRO.</figcaption>
+            </figure>
+          </div>
+          <div>
+            <h3>Recipe II: end-to-end debiasing</h3>
+            <figure class="figure">
+              <div class="figure__frame">
+                <img src="static/images/end2end_web.jpg" width="1600" height="621" loading="lazy" alt="Diffusing DeBias Recipe II: end-to-end LfF-style debiasing where Bias Amplifier losses reweight training samples for the target model">
+              </div>
+              <figcaption><strong>Figure 5.</strong> Recipe II replaces the GCE-trained biased model of LfF with the frozen BA, whose per-sample losses reweight the target model loss.</figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="prose">
+          <p><b>Recipe I (Two-Step)</b>: The BA, trained on synthetic data, is run in inference on the real training set. Samples it misclassifies, and whose loss is above the mean training loss plus <i>&gamma;</i> standard deviations, are marked as bias-conflicting; the others as bias-aligned. These bias pseudo-labels are used as group information for GroupDRO, which trains the debiased target model.</p>
+          <p><b>Recipe II (End-to-End)</b>: Following the Learning from Failure (LfF) scheme, the GCE-trained biased model is replaced with the BA, which is frozen and only used in inference to compute its loss on each real training sample. The target model's CE loss is reweighted by <i>r</i> = <i>L</i><sub>BA</sub> / (<i>L</i><sub>debiasing</sub> + <i>L</i><sub>BA</sub>), which should be low for bias-aligned and high for bias-conflicting samples.</p>
+        </div>
+      </div>
+    </section>
 
+    <section class="section section--alt" id="results">
+      <div class="wrap">
+        <h2 class="section__title">Experimental results</h2>
+        <div class="prose">
+          <p>We evaluate DDB on five popular biased benchmarks with different types of spurious correlations:</p>
+          <ul>
+            <li><b>Waterbirds</b>: bird species correlated with backgrounds (water vs. land), &rho; = 0.950</li>
+            <li><b>BFFHQ</b>: face age classification (young vs. old) with gender bias, &rho; = 0.995</li>
+            <li><b>BAR</b>: six actions associated with stereotypical contexts, no bias annotations</li>
+            <li><b>ImageNet-9/A</b>: training on ImageNet-9 (textural and shape biases), testing on ImageNet-A</li>
+            <li><b>UrbanCars</b>: urban vs. country cars with two shortcuts, background and co-occurring objects</li>
+          </ul>
+        </div>
+
+        <h3>Main results: Waterbirds and BAR</h3>
+        <figure class="figure">
+          <div class="figure__frame">
+            <img src="static/images/table1.png" width="1261" height="634" loading="lazy" alt="Results table: Diffusing DeBias worst-group accuracy on Waterbirds and average accuracy on BAR compared with unsupervised debiasing methods">
+          </div>
+          <figcaption><strong>Table 1.</strong> Results of DDB Recipes I and II on Waterbirds (left, worst-group accuracy) and BAR (right, average accuracy). Ticks mark bias-unsupervised methods. Best unsupervised results are in bold; second-best are underlined.</figcaption>
+        </figure>
+
+        <h3>Main results: BFFHQ and ImageNet-9/A</h3>
+        <figure class="figure">
+          <div class="figure__frame">
+            <img src="static/images/table2.png" width="1260" height="552" loading="lazy" alt="Results table: Diffusing DeBias average and bias-conflicting accuracy on BFFHQ and average accuracy on ImageNet-A compared with unsupervised debiasing methods">
+          </div>
+          <figcaption><strong>Table 2.</strong> Results of DDB Recipes I and II on BFFHQ (left, average and bias-conflicting accuracy) and ImageNet-9/A (right, average accuracy on ImageNet-A). Ticks mark bias-unsupervised methods. Best unsupervised results are in bold; second-best are underlined.</figcaption>
+        </figure>
+
+        <h3>Main results: UrbanCars (multiple shortcuts)</h3>
+        <div class="table-block">
+          <p class="table-caption"><strong>Table 3.</strong> Comparison on the UrbanCars biased dataset. ID.ACC is in-distribution accuracy (the higher, the better); the other three metrics show the accuracy gap between each minority group and ID.ACC (the lower, the better). GroupDRO and LLE are listed first as they rely on bias information.</p>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr><th class="left" scope="col">Method</th><th scope="col">ID.ACC &uarr;</th><th scope="col">BG-Gap &darr;</th><th scope="col">CoObj-Gap &darr;</th><th scope="col">BG-CoObj-Gap &darr;</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">GroupDRO</th><td>91.60</td><td>10.90</td><td>3.60</td><td>16.40</td></tr>
+                <tr><th scope="row">LLE</th><td>96.70</td><td class="second">2.10</td><td class="second">2.70</td><td class="second">5.90</td></tr>
+                <tr class="group-start"><th scope="row">LfF</th><td class="second">97.20</td><td>11.60</td><td>18.40</td><td>63.20</td></tr>
+                <tr><th scope="row">JTT</th><td>95.90</td><td>8.10</td><td>13.30</td><td>40.10</td></tr>
+                <tr><th scope="row">EIIL</th><td>95.50</td><td>4.20</td><td>24.70</td><td>44.90</td></tr>
+                <tr><th scope="row">DebiAN</th><td class="second">98.00</td><td>14.90</td><td>10.50</td><td>69.00</td></tr>
+                <tr class="ours"><th scope="row">DDB-I (ours)</th><td>86.39 &plusmn; 0.74</td><td class="best">1.85 &plusmn; 3.21</td><td class="best">0.52 &plusmn; 1.38</td><td class="best">0.12 &plusmn; 1.56</td></tr>
+                <tr class="ours"><th scope="row">DDB-II (ours)</th><td class="best">98.56 &plusmn; 0.92</td><td>2.30 &plusmn; 0.60</td><td>11.10 &plusmn; 1.20</td><td>46.70 &plusmn; 2.42</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h3>Key findings</h3>
+        <ul class="highlights">
+          <li><h3>State-of-the-art performance</h3><p>Both DDB recipes show state-of-the-art results across all benchmarks; on Waterbirds, DDB-II (91.56% worst-group accuracy) is above all unsupervised methods and the supervised GroupDRO (91.40%)</p></li>
+          <li><h3>Synthetic data is crucial</h3><p>On Waterbirds, a BA trained on real data memorized all bias-conflicting samples in 50 epochs (empty pseudo-label groups) and reached only 79.43% WGA when trained for one epoch (Recipe I); with Recipe II it gave 78.45%</p></li>
+          <li><h3>Bias Amplifier data</h3><p>All main results use 1,000 synthetic images per class; even 100 synthetic images are enough for good debiasing performance</p></li>
+          <li><h3>Limited impact of CFG strength</h3><p>On Waterbirds (Recipe I), WGA ranges from 87.85% to 90.81% for guidance strength <i>w</i> &isin; {0, 1, 2, 3, 5}, with the best result at <i>w</i> = 1</p></li>
+          <li><h3>Bias identification</h3><p>The BA identifies bias-aligned and bias-conflicting training samples with 89.00% accuracy on Waterbirds and 96.00% on BFFHQ</p></li>
+          <li><h3>No degradation on unbiased data</h3><p>On CIFAR-10, Recipe I gives 84.16% test accuracy vs. 83.26% for ERM with the same ResNet-18</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="media">
+      <div class="wrap">
+        <h2 class="section__title">Poster</h2>
+        <div class="media-grid">
+          <div class="media-card" id="poster">
+            <a class="preview" href="static/pdfs/DiffusingDeBias_NeurIPS2025_Poster.pdf" target="_blank" rel="noopener noreferrer"><img src="static/images/poster_preview.jpg" width="1400" height="934" loading="lazy" alt="Diffusing DeBias NeurIPS 2025 poster"></a>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Teaser -->
-  <section class="hero teaser">
-    <div class="container is-max-desktop">
-      <div class="hero-body">
-        <h2 class="subtitle has-text-centered">
-          We introduce <b>Diffusing DeBias (DDB)</b>, a plug-in debiasing framework that leverages conditional diffusion models to generate synthetic bias-aligned images and train a robust Bias Amplifier for unsupervised model debiasing.
-        </h2>
-        <div style="margin-top:1rem;">
-          <img src="static/images/teaser_web.jpg" width="2000" height="918" alt="Diffusing DeBias overview: (a) a bias amplifier trained on a real biased dataset memorizes bias-conflicting samples; (b) a diffusion model generates synthetic bias-aligned images so the bias amplifier never sees real data" style="width:100%; height:auto; max-height:480px; object-fit:contain;">
-          <p class="has-text-centered" style="margin-top:0.5rem; font-size:0.9rem; color:#666;">
-            <b>Figure 1:</b> Comparison of bias amplifier training approaches. (a) Traditional methods that use real biased datasets lead to the memorization of bias-conflicting samples, resulting in suboptimal auxiliary models. (b) Our proposed approach leverages conditional diffusion models to learn class-specific biases and amplify them into synthetic images. Such generations can replace the original training set for learning an effective <i>Bias Amplifier</i>, eliminating memorization effects by avoiding exposure to real data.
-          </p>
+    <section class="section section--alt" id="faq">
+      <div class="wrap">
+        <h2 class="section__title">Frequently asked questions</h2>
+        <div class="faq">
+          <details>
+            <summary>What is Diffusing DeBias?</summary>
+            <div><p>Diffusing DeBias (DDB) is an unsupervised model debiasing method for image classification, published at NeurIPS 2025. It trains a class-conditional diffusion model with classifier-free guidance on the biased training set and samples synthetic bias-aligned images, which fully replace the real training set for training a Bias Amplifier. Because the Bias Amplifier never sees real data, it cannot memorize the few bias-conflicting training samples. Code is available at https://github.com/Malga-Vision/DiffusingDeBias.</p></div>
+          </details>
+          <details>
+            <summary>How is the Bias Amplifier used for debiasing?</summary>
+            <div><p>Diffusing DeBias is a plug-in for two recipes. Recipe I (two-step) takes the training samples misclassified by the Bias Amplifier, filtered with a per-sample loss heuristic, as pseudo-groups for GroupDRO. Recipe II (end-to-end) uses the Bias Amplifier losses to reweight training samples in an LfF-style scheme. All main results train the Bias Amplifier on 1000 synthetic images per class.</p></div>
+          </details>
+          <details>
+            <summary>Which datasets is Diffusing DeBias evaluated on?</summary>
+            <div><p>Diffusing DeBias is evaluated on Waterbirds, BFFHQ (Biased Flickr-Faces-HQ), BAR (Biased Action Recognition), ImageNet-9 with testing on ImageNet-A, and UrbanCars, which contains multiple shortcuts (background and co-occurring object). Results are averaged over three independent runs.</p></div>
+          </details>
+          <details>
+            <summary>How well does Diffusing DeBias perform?</summary>
+            <div><p>On Waterbirds, DDB-II reaches 91.56% worst-group accuracy, above all unsupervised methods and the supervised GroupDRO (91.40%). On BAR, DDB-II reaches 72.81% average accuracy, 2.93 points above DebiAN. On BFFHQ, DDB-I reaches 74.67% bias-conflicting accuracy against 73.60% for ETF-Debias, and on ImageNet-A DDB-I reaches 39.80% average accuracy.</p></div>
+          </details>
+          <details>
+            <summary>Why train the Bias Amplifier on synthetic data instead of real data?</summary>
+            <div><p>In the NeurIPS 2025 paper, a Bias Amplifier trained on the real Waterbirds training set for 50 epochs memorized all bias-conflicting samples, leaving empty pseudo-groups; training it for one epoch gave only 79.43% worst-group accuracy with Recipe I, and a frozen Bias Amplifier trained on real data gave 78.45% with Recipe II. Diffusion-generated images were rated bias-aligned in 98.35% (Waterbirds), 99.20% (BAR) and 99.70% (BFFHQ) of cases. On unbiased CIFAR-10, Diffusing DeBias does not hurt accuracy (84.16% vs. 83.26% for ERM).</p></div>
+          </details>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Abstract -->
-  <section class="section hero is-light">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-3">Abstract</h2>
-          <div class="content has-text-justified">
-            <p>
-              The effectiveness of deep learning models in classification tasks is often challenged by the quality and quantity of training data whenever they are affected by strong spurious correlations between specific attributes and target labels. This results in a form of bias affecting training data, which typically leads to unrecoverable weak generalization in prediction. This paper addresses this problem by leveraging bias amplification with generated synthetic data only: we introduce Diffusing DeBias (DDB), a novel approach acting as a plug-in for common methods of unsupervised model debiasing, exploiting the inherent bias-learning tendency of diffusion models in data generation. Specifically, our approach adopts conditional diffusion models to generate synthetic bias-aligned images, which fully replace the original training set for learning an effective bias amplifier model to be subsequently incorporated into an end-to-end and a two-step unsupervised debiasing approach. By tackling the fundamental issue of bias-conflicting training samples’ memorization in learning auxiliary models, typical of this type of technique, our proposed method outperforms the current state-of-the-art in multiple benchmark datasets, demonstrating its potential as a versatile and effective tool for tackling bias in deep learning models. Code is available at <a href="https://github.com/Malga-Vision/DiffusingDeBias">https://github.com/Malga-Vision/DiffusingDeBias</a>.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Approach / Key ideas -->
-  <section class="section hero is-small">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column">
-          <h2 class="title is-3">Method Overview</h2>
-        </div>
-      </div>
-
-      <div class="columns is-centered">
-        <div class="column">
-          <img src="static/images/pipeline2_web.jpg" width="2400" height="565" loading="lazy" alt="Diffusing DeBias pipeline: a conditional diffusion model with classifier-free guidance generates synthetic bias-aligned images, a Bias Amplifier is trained on them and then used in a two-step or end-to-end debiasing recipe" style="width:100%; height:auto">
-          <p class="has-text-centered" style="margin-top:0.5rem; font-size:0.9rem; color:#666;">
-            <b>Figure 2:</b> Schematic representation of our DDB framework. The debiasing process consists of two key steps: (A) <i>Diffusing the Bias</i> uses a conditional diffusion model with classifier-free guidance to generate synthetic images that preserve training dataset biases, and (B) employs a <i>Bias Amplifier</i> firstly trained on such synthetic data, and subsequently used during inference to extract supervisory bias signals from real images. These signals are used to guide the training process of a target debiased model by designing two <i>debiasing recipes</i> (i.e., 2-step and end-to-end methods).
-          </p>
-        </div>
-      </div>
-
-      <div class="columns is-centered has-text-centered" style="margin-top:2rem;">
-        <div class="column is-four-fifths">
-          <div class="content has-text-justified">
-            <h3 class="title is-4">Key Innovation: Synthetic Bias Amplification</h3>
-            <p>
-              The core idea of DDB is to <b>avoid training the Bias Amplifier on real data</b>. Traditional approaches train bias models on the real training set, which leads to memorization of bias-conflicting samples—the very samples we want to upweight during debiasing. Instead, DDB:
-            </p>
-            <ol style="text-align:left; margin-left:2rem;">
-              <li><b>Trains a class-conditional diffusion model</b> on the biased training dataset</li>
-              <li><b>Generates synthetic bias-aligned images</b> with classifier-free guidance (CFG): trained on data with strong spurious correlations, the diffusion model learns and amplifies the per-class biased distribution (guidance strength <i>w</i> = 1, the best value in the ablation)</li>
-              <li><b>Trains the Bias Amplifier exclusively on synthetic data</b>, ensuring it learns to recognize bias patterns without memorizing real bias-conflicting examples</li>
-              <li><b>Integrates the BA into debiasing recipes</b> (Recipe I: two-step, bias pseudo-labels for GroupDRO; Recipe II: end-to-end, LfF-style reweighting with the frozen BA)</li>
-            </ol>
-            
-            <h3 class="title is-4" style="margin-top:1.5rem;">Why This Works</h3>
-            <p>
-              Since the Bias Amplifier is trained on <b>purely synthetic bias-aligned data</b> and does not see the original training set at all, bias-conflicting sample overfitting and interference are avoided by construction. Auxiliary models trained on real data instead tend to memorize the few bias-conflicting samples within very few epochs, failing to provide different learning signals for bias-aligned and bias-conflicting samples.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Synthetic Data Visualization -->
-  <section class="section hero is-light">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column">
-          <h2 class="title is-3">Synthetic Bias-Aligned Samples</h2>
-        </div>
-      </div>
-
-      <div class="columns is-centered">
-        <div class="column">
-          <img src="static/images/synthetic2_web.jpg" width="2400" height="653" loading="lazy" alt="Synthetic bias-aligned images generated by the Diffusing DeBias diffusion model for Waterbirds, BFFHQ, BAR, ImageNet-9 and UrbanCars" style="width:100%; height:auto">
-          <p class="has-text-centered" style="margin-top:0.5rem; font-size:0.9rem; color:#666;">
-            <b>Figure 3:</b> Examples of synthetic bias-aligned images across multiple datasets. Each grid shows synthetic images for specific classes across biased datasets, revealing how the model aligns with dataset-specific biases in different contexts.
-          </p>
-        </div>
-      </div>
-
-      <div class="columns is-centered has-text-centered" style="margin-top:1rem;">
-        <div class="column is-four-fifths">
-          <div class="content has-text-justified">
-            <p>
-              The generated samples maintain good fidelity and capture the typical bias patterns of each training set per class. Three independent annotators verified the presence of the bias in each synthetic sample: the average bias-aligned proportion is 98.35% for Waterbirds, 99.20% for BAR and 99.70% for BFFHQ, all higher than the known proportions of bias in the original datasets. On Waterbirds, BLIP-2 captions of the generated images show, together with the object class (<i>bird</i>), frequent bias-attribute words (<i>land</i>, <i>water</i>).
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Two Debiasing Recipes -->
-  <section class="section hero is-small">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column">
-          <h2 class="title is-3">Integration with Debiasing Recipes</h2>
-        </div>
-      </div>
-
-      <div class="columns is-centered" style="margin-top:1rem;">
-        <div class="column is-half">
-          <h3 class="title is-5">Recipe I: Two-Step Debiasing</h3>
-          <img src="static/images/groupdro_web.jpg" width="1600" height="811" loading="lazy" alt="Diffusing DeBias Recipe I: the Bias Amplifier error set gives pseudo-groups used to train the target model with GroupDRO" style="width:100%; height:auto">
-          <p class="has-text-centered" style="margin-top:0.5rem; font-size:0.85rem; color:#666;">
-            <b>Figure 4:</b> Recipe I uses the BA to estimate bias pseudo-labels on the real training data, then trains the target model with GroupDRO.
-          </p>
-        </div>
-        <div class="column is-half">
-          <h3 class="title is-5">Recipe II: End-to-End Debiasing</h3>
-          <img src="static/images/end2end_web.jpg" width="1600" height="621" loading="lazy" alt="Diffusing DeBias Recipe II: end-to-end LfF-style debiasing where Bias Amplifier losses reweight training samples for the target model" style="width:100%; height:auto">
-          <p class="has-text-centered" style="margin-top:0.5rem; font-size:0.85rem; color:#666;">
-            <b>Figure 5:</b> Recipe II replaces the GCE-trained biased model of LfF with the frozen BA, whose per-sample losses reweight the target model loss.
-          </p>
-        </div>
-      </div>
-
-      <div class="columns is-centered has-text-centered" style="margin-top:1rem;">
-        <div class="column is-four-fifths">
-          <div class="content has-text-justified">
-            <p>
-              <b>Recipe I (Two-Step)</b>: The BA, trained on synthetic data, is run in inference on the real training set. Samples it misclassifies, and whose loss is above the mean training loss plus <i>&gamma;</i> standard deviations, are marked as bias-conflicting; the others as bias-aligned. These bias pseudo-labels are used as group information for GroupDRO, which trains the debiased target model.
-            </p>
-            <p>
-              <b>Recipe II (End-to-End)</b>: Following the Learning from Failure (LfF) scheme, the GCE-trained biased model is replaced with the BA, which is frozen and only used in inference to compute its loss on each real training sample. The target model's CE loss is reweighted by <i>r</i> = <i>L</i><sub>BA</sub> / (<i>L</i><sub>debiasing</sub> + <i>L</i><sub>BA</sub>), which should be low for bias-aligned and high for bias-conflicting samples.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Results -->
-  <section class="section hero is-light">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column">
-          <h2 class="title is-3">Experimental Results</h2>
-        </div>
-      </div>
-
-      <div class="columns is-centered has-text-centered" style="margin-top:1rem;">
-        <div class="column is-four-fifths">
-          <div class="content has-text-justified">
-            <p>
-              We evaluate DDB on five popular biased benchmarks with different types of spurious correlations:
-            </p>
-            <ul style="text-align:left; margin-left:2rem;">
-              <li><b>Waterbirds</b>: bird species correlated with backgrounds (water vs. land), &rho; = 0.950</li>
-              <li><b>BFFHQ</b>: face age classification (young vs. old) with gender bias, &rho; = 0.995</li>
-              <li><b>BAR</b>: six actions associated with stereotypical contexts, no bias annotations</li>
-              <li><b>ImageNet-9/A</b>: training on ImageNet-9 (textural and shape biases), testing on ImageNet-A</li>
-              <li><b>UrbanCars</b>: urban vs. country cars with two shortcuts, background and co-occurring objects</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Results Tables -->
-      <div class="columns is-centered" style="margin-top:2rem;">
-        <div class="column">
-          <h3 class="title is-4 has-text-centered">Main Results: Waterbirds and BAR</h3>
-          <img src="static/images/table1.png" width="1261" height="634" loading="lazy" alt="Results table: Diffusing DeBias worst-group accuracy on Waterbirds and average accuracy on BAR compared with unsupervised debiasing methods" style="width:100%; height:auto">
-          <p class="has-text-centered" style="margin-top:0.5rem; font-size:0.9rem; color:#666;">
-            <b>Table 1:</b> Results of DDB Recipes I and II on Waterbirds (left, worst-group accuracy) and BAR (right, average accuracy). Ticks mark bias-unsupervised methods. Best unsupervised results are in bold; second-best are underlined.
-          </p>
-        </div>
-      </div>
-
-      <div class="columns is-centered" style="margin-top:2rem;">
-        <div class="column">
-          <h3 class="title is-4 has-text-centered">Main Results: BFFHQ and ImageNet-9/A</h3>
-          <img src="static/images/table2.png" width="1260" height="552" loading="lazy" alt="Results table: Diffusing DeBias average and bias-conflicting accuracy on BFFHQ and average accuracy on ImageNet-A compared with unsupervised debiasing methods" style="width:100%; height:auto">
-          <p class="has-text-centered" style="margin-top:0.5rem; font-size:0.9rem; color:#666;">
-            <b>Table 2:</b> Results of DDB Recipes I and II on BFFHQ (left, average and bias-conflicting accuracy) and ImageNet-9/A (right, average accuracy on ImageNet-A). Ticks mark bias-unsupervised methods. Best unsupervised results are in bold; second-best are underlined.
-          </p>
-        </div>
-      </div>
-
-      <div class="columns is-centered" style="margin-top:2rem;">
-        <div class="column">
-          <h3 class="title is-4 has-text-centered">Main Results: UrbanCars (multiple shortcuts)</h3>
-          <div class="table-container">
-          <table class="table is-narrow is-fullwidth" style="font-size:0.9rem;">
-            <thead><tr><th>Method</th><th>ID.ACC &uarr;</th><th>BG-Gap &darr;</th><th>CoObj-Gap &darr;</th><th>BG-CoObj-Gap &darr;</th></tr></thead>
-            <tbody>
-              <tr><td>GroupDRO</td><td>91.60</td><td>10.90</td><td>3.60</td><td>16.40</td></tr>
-              <tr><td>LLE</td><td>96.70</td><td><u>2.10</u></td><td><u>2.70</u></td><td><u>5.90</u></td></tr>
-              <tr><td>LfF</td><td><u>97.20</u></td><td>11.60</td><td>18.40</td><td>63.20</td></tr>
-              <tr><td>JTT</td><td>95.90</td><td>8.10</td><td>13.30</td><td>40.10</td></tr>
-              <tr><td>EIIL</td><td>95.50</td><td>4.20</td><td>24.70</td><td>44.90</td></tr>
-              <tr><td>DebiAN</td><td><u>98.00</u></td><td>14.90</td><td>10.50</td><td>69.00</td></tr>
-              <tr><td>DDB-I (ours)</td><td>86.39 &plusmn; 0.74</td><td><b>1.85</b> &plusmn; 3.21</td><td><b>0.52</b> &plusmn; 1.38</td><td><b>0.12</b> &plusmn; 1.56</td></tr>
-              <tr><td>DDB-II (ours)</td><td><b>98.56</b> &plusmn; 0.92</td><td>2.30 &plusmn; 0.60</td><td>11.10 &plusmn; 1.20</td><td>46.70 &plusmn; 2.42</td></tr>
-            </tbody>
-          </table>
-          </div>
-          <p class="has-text-centered" style="margin-top:0.5rem; font-size:0.9rem; color:#666;">
-            <b>Table 3:</b> Comparison on the UrbanCars biased dataset. ID.ACC is in-distribution accuracy (the higher, the better); the other three metrics show the accuracy gap between each minority group and ID.ACC (the lower, the better). GroupDRO and LLE are listed first as they rely on bias information.
-          </p>
-        </div>
-      </div>
-
-      <div class="columns is-centered has-text-centered" style="margin-top:2rem;">
-        <div class="column is-four-fifths">
-          <div class="content has-text-justified">
-            <h3 class="title is-4">Key Findings</h3>
-            <ul style="text-align:left; margin-left:2rem;">
-              <li><b>State-of-the-art performance</b>: both DDB recipes show state-of-the-art results across all benchmarks; on Waterbirds, DDB-II (91.56% worst-group accuracy) is above all unsupervised methods and the supervised GroupDRO (91.40%)</li>
-              <li><b>Synthetic data is crucial</b>: on Waterbirds, a BA trained on real data memorized all bias-conflicting samples in 50 epochs (empty pseudo-label groups) and reached only 79.43% WGA when trained for one epoch (Recipe I); with Recipe II it gave 78.45%</li>
-              <li><b>Bias Amplifier data</b>: all main results use 1,000 synthetic images per class; even 100 synthetic images are enough for good debiasing performance</li>
-              <li><b>Limited impact of CFG strength</b>: on Waterbirds (Recipe I), WGA ranges from 87.85% to 90.81% for guidance strength <i>w</i> &isin; {0, 1, 2, 3, 5}, with the best result at <i>w</i> = 1</li>
-              <li><b>Bias identification</b>: the BA identifies bias-aligned and bias-conflicting training samples with 89.00% accuracy on Waterbirds and 96.00% on BFFHQ</li>
-              <li><b>No degradation on unbiased data</b>: on CIFAR-10, Recipe I gives 84.16% test accuracy vs. 83.26% for ERM with the same ResNet-18</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Key Contributions -->
-  <section class="section hero is-small">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column">
-          <h2 class="title is-3">Key Contributions</h2>
-        </div>
-      </div>
-
-      <div class="columns is-centered has-text-centered" style="margin-top:1rem;">
-        <div class="column is-four-fifths">
-          <div class="content has-text-justified">
-            <div class="box" style="background-color: #f8f9fa; border-left: 4px solid #3273dc;">
-              <ol style="text-align:left; margin-left:1rem; line-height:1.8;">
-                <li><b>Synthetic bias amplification</b>: conditional diffusion models learn the per-class bias-aligned distributions of biased datasets with unknown bias information, and their synthetic bias-aligned images train a robust Bias Amplifier</li>
-                <li><b>Memorization-free Bias Amplifier</b>: By training exclusively on synthetic data, we avoid memorizing bias-conflicting real samples, leading to better generalization</li>
-                <li><b>Plug-and-play framework</b>: DDB can be integrated into various debiasing recipes (both two-step and end-to-end approaches)</li>
-                <li><b>State-of-the-art results</b>: on popular benchmarks with single or multiple biases, without degrading performance on unbiased data</li>
-                <li><b>Comprehensive analysis</b>: Extensive ablations studying CFG scale, synthetic data quantity, and comparison with real-data training</li>
-              </ol>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="section" id="faq">
-    <div class="container is-max-desktop content">
-      <h2 class="title">Frequently asked questions</h2>
-          <h3 class="title is-5" style="margin-top:1.2rem;">What is Diffusing DeBias?</h3>
-          <p>Diffusing DeBias (DDB) is an unsupervised model debiasing method for image classification, published at NeurIPS 2025. It trains a class-conditional diffusion model with classifier-free guidance on the biased training set and samples synthetic bias-aligned images, which fully replace the real training set for training a Bias Amplifier. Because the Bias Amplifier never sees real data, it cannot memorize the few bias-conflicting training samples. Code is available at https://github.com/Malga-Vision/DiffusingDeBias.</p>
-          <h3 class="title is-5" style="margin-top:1.2rem;">How is the Bias Amplifier used for debiasing?</h3>
-          <p>Diffusing DeBias is a plug-in for two recipes. Recipe I (two-step) takes the training samples misclassified by the Bias Amplifier, filtered with a per-sample loss heuristic, as pseudo-groups for GroupDRO. Recipe II (end-to-end) uses the Bias Amplifier losses to reweight training samples in an LfF-style scheme. All main results train the Bias Amplifier on 1000 synthetic images per class.</p>
-          <h3 class="title is-5" style="margin-top:1.2rem;">Which datasets is Diffusing DeBias evaluated on?</h3>
-          <p>Diffusing DeBias is evaluated on Waterbirds, BFFHQ (Biased Flickr-Faces-HQ), BAR (Biased Action Recognition), ImageNet-9 with testing on ImageNet-A, and UrbanCars, which contains multiple shortcuts (background and co-occurring object). Results are averaged over three independent runs.</p>
-          <h3 class="title is-5" style="margin-top:1.2rem;">How well does Diffusing DeBias perform?</h3>
-          <p>On Waterbirds, DDB-II reaches 91.56% worst-group accuracy, above all unsupervised methods and the supervised GroupDRO (91.40%). On BAR, DDB-II reaches 72.81% average accuracy, 2.93 points above DebiAN. On BFFHQ, DDB-I reaches 74.67% bias-conflicting accuracy against 73.60% for ETF-Debias, and on ImageNet-A DDB-I reaches 39.80% average accuracy.</p>
-          <h3 class="title is-5" style="margin-top:1.2rem;">Why train the Bias Amplifier on synthetic data instead of real data?</h3>
-          <p>In the NeurIPS 2025 paper, a Bias Amplifier trained on the real Waterbirds training set for 50 epochs memorized all bias-conflicting samples, leaving empty pseudo-groups; training it for one epoch gave only 79.43% worst-group accuracy with Recipe I, and a frozen Bias Amplifier trained on real data gave 78.45% with Recipe II. Diffusion-generated images were rated bias-aligned in 98.35% (Waterbirds), 99.20% (BAR) and 99.70% (BFFHQ) of cases. On unbiased CIFAR-10, Diffusing DeBias does not hurt accuracy (84.16% vs. 83.26% for ERM).</p>
-    </div>
-  </section>
-
-  <!-- Related work -->
-  <section class="section hero is-light" id="related">
-    <div class="container is-max-desktop content">
-      <h2 class="title">Related work from our lab</h2>
-      <p>Related work from the MaLGa group (University of Genoa) co-authored by Roberto Di Via:</p>
-      <ul>
-        <li>
-          <b>PACER</b>: Curriculum Self-Training with Spatial Uncertainty for Pseudo-Label Selection in Few-Shot Anatomical Landmark Detection. <i>WACV 2027</i>.
-          [<a href="https://malga-vision.github.io/PACER-wacv27-AcademicPage/">Project page</a>]
-          [<a href="https://github.com/Malga-Vision/PACER-wacv27">Code</a>]
-        </li>
-        <li>
-          <b>CDPM-Align</b>: Multi-Scale Guidance-Aligned Diffusion Pretraining for Robust Few-Shot Anatomical Landmark Detection. <i>MICCAI 2026</i>.
-          [<a href="https://malga-vision.github.io/CDPM-Align_AcademicPage/">Project page</a>]
-          [<a href="https://github.com/Malga-Vision/CDPM-Align">Code</a>]
-        </li>
-        <li>
-          <b>Landmarks-Hip-Conditions</b>: Automated Landmark Detection for assessing hip conditions: A Cross-Modality Validation of MRI versus X-ray. <i>ISBI 2026</i>.
-          [<a href="https://malga-vision.github.io/Landmarks-Hip-Conditions-AcademicPage/">Project page</a>]
-        </li>
-        <li>
-          <b>FairerXRay</b>: Are X-ray Landmark Detection Models Fair? A Preliminary Assessment and Mitigation Strategy. <i>ICCV 2025 Workshop</i>.
-          [<a href="https://malga-vision.github.io/FairerXRay-LandmarkDetection-AcademicPage/">Project page</a>]
-        </li>
-        <li>
-          <b>DiffusionXray</b>: Self-supervised pre-training with diffusion model for few-shot landmark detection in x-ray images. <i>WACV 2025</i>.
-          [<a href="https://malga-vision.github.io/DiffusionXray-FewShot-LandmarkDetection-AcademicPage/">Project page</a>]
-        </li>
-        <li>
-          <b>InDomain transfer learning</b>: Is in-domain data beneficial in transfer learning for landmarks detection in X-ray images?. <i>ISBI 2024</i>.
-          [<a href="https://malga-vision.github.io/InDomain-TransferLearning-LandmarkDetection-AcademicPage/">Project page</a>]
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- BibTex / Citation -->
-  <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
-      <h2 class="title">Citation</h2>
-      <h3 class="title is-5">BibTeX</h3>
-      <pre><code>@inproceedings{ciranni2025diffusing,
+    <section class="section" id="cite">
+      <div class="wrap">
+        <h2 class="section__title">Citation</h2>
+        <div class="cite">
+          <button class="button cite__copy" type="button" data-copy="bibtex"><svg class="icon" aria-hidden="true"><use href="static/malga/img/icons.svg#i-copy"/></svg><span data-label>Copy</span></button>
+          <pre><code id="bibtex">@inproceedings{ciranni2025diffusing,
   title={Diffusing DeBias: Synthetic Bias Amplification for Model Debiasing},
   author={Ciranni, Massimiliano and Pastore, Vito Paolo and Di Via, Roberto and
           Tartaglione, Enzo and Odone, Francesca and Murino, Vittorio},
@@ -680,34 +536,85 @@
   doi={10.52202/085713-3893},
   year={2025}
 }</code></pre>
-      
-      <h3 class="title is-5" style="margin-top:2rem;">APA Citation</h3>
-      <div class="content" style="background-color:#f5f5f5; padding:1rem; border-radius:4px;">
-        <p>
-          Ciranni, M., Pastore, V. P., Di Via, R., Tartaglione, E., Odone, F., & Murino, V. (2025). 
-          Diffusing DeBias: Synthetic Bias Amplification for Model Debiasing. 
-          In <i>Advances in Neural Information Processing Systems</i> (NeurIPS 2025), 38, 116778–116805. https://doi.org/10.52202/085713-3893
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-8">
-          <div class="content">
-            <p>
-              This page was adapted to present the NeurIPS 2025 paper <em>Diffusing DeBias</em>. For details, see the paper PDF and the project code linked above.
-            </p>
-            <p>
-              This website is adapted from <a href="https://nerfies.github.io/">Nerfies</a>, licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
-            </p>
-          </div>
         </div>
+      </div>
+    </section>
+
+<!-- RELATED:START -->
+    <section class="section" id="related">
+      <div class="wrap">
+        <h2 class="section__title">Related work from our lab</h2>
+        <ol class="related">
+          <li>
+            <span class="related__venue">WACV 2027</span>
+            <a class="related__title" href="https://malga-vision.github.io/PACER-wacv27-AcademicPage/">PACER: Curriculum Self-Training with Spatial Uncertainty for Pseudo-Label Selection in Few-Shot Anatomical Landmark Detection</a>
+            <p><a href="https://github.com/Malga-Vision/PACER-wacv27" target="_blank" rel="noopener noreferrer">Code</a></p>
+          </li>
+          <li>
+            <span class="related__venue">MICCAI 2026, oral</span>
+            <a class="related__title" href="https://malga-vision.github.io/CDPM-Align_AcademicPage/">CDPM-Align: Multi-Scale Guidance-Aligned Diffusion Pretraining for Robust Few-Shot Anatomical Landmark Detection</a>
+            <p><a href="https://github.com/Malga-Vision/CDPM-Align" target="_blank" rel="noopener noreferrer">Code</a></p>
+          </li>
+          <li>
+            <span class="related__venue">ISBI 2026</span>
+            <a class="related__title" href="https://malga-vision.github.io/Landmarks-Hip-Conditions-AcademicPage/">Automated Landmark Detection for Assessing Hip Conditions: A Cross-Modality Validation of MRI Versus X-Ray</a>
+            <p><a href="https://github.com/Malga-Vision/Landmarks-Hip-Conditions" target="_blank" rel="noopener noreferrer">Code</a></p>
+          </li>
+          <li aria-current="page">
+            <span class="related__venue">NeurIPS 2025</span>
+            <span class="related__title">Diffusing DeBias: Synthetic Bias Amplification for Model Debiasing</span><span class="related__here">this page</span>
+          </li>
+          <li>
+            <span class="related__venue">ICCV 2025 Workshops</span>
+            <a class="related__title" href="https://malga-vision.github.io/FairerXRay-LandmarkDetection-AcademicPage/">Are X-ray Landmark Detection Models Fair? A Preliminary Assessment and Mitigation Strategy</a>
+          </li>
+          <li>
+            <span class="related__venue">WACV 2025</span>
+            <a class="related__title" href="https://malga-vision.github.io/DiffusionXray-FewShot-LandmarkDetection-AcademicPage/">Self-Supervised Pre-Training with Diffusion Model for Few-Shot Landmark Detection in X-Ray Images</a>
+            <p><a href="https://github.com/Malga-Vision/DiffusionXray-FewShot-LandmarkDetection" target="_blank" rel="noopener noreferrer">Code</a></p>
+          </li>
+          <li>
+            <span class="related__venue">ISBI 2024</span>
+            <a class="related__title" href="https://malga-vision.github.io/InDomain-TransferLearning-LandmarkDetection-AcademicPage/">Is In-Domain Data Beneficial in Transfer Learning for Landmarks Detection in X-Ray Images?</a>
+          </li>
+        </ol>
+      </div>
+    </section>
+<!-- RELATED:END -->
+  </main>
+
+<!-- FOOTER:START -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="site-footer__grid">
+        <div>
+          <a class="site-footer__logo" href="https://malga.unige.it/" target="_blank" rel="noopener noreferrer">
+            <img src="static/malga/img/malga-unige-white.svg" width="236" height="74" alt="MaLGa and University of Genoa">
+          </a>
+          <p>Machine Learning Genoa Center (MaLGa)<br>DIBRIS, University of Genoa, Italy</p>
+        </div>
+        <div>
+          <h2>This paper</h2>
+          <ul>
+            <li><a href="https://github.com/Malga-Vision/DiffusingDeBias" target="_blank" rel="noopener noreferrer">Code</a></li>
+            <li><a href="#cite">How to cite</a></li>
+            <li><a href="https://github.com/Malga-Vision/DiffusingDeBias-AcademicPage" target="_blank" rel="noopener noreferrer">Source of this page</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>MaLGa</h2>
+          <ul>
+            <li><a href="https://malga.unige.it/" target="_blank" rel="noopener noreferrer">malga.unige.it</a></li>
+            <li><a href="https://github.com/Malga-Vision" target="_blank" rel="noopener noreferrer">Malga-Vision on GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__legal">
+        <span>&copy; The authors. Figures and text are from the paper.</span>
+        <span>Built with the <a href="https://github.com/Malga-Vision/malga-academic-page-template" target="_blank" rel="noopener noreferrer">MaLGa academic page template</a>.</span>
       </div>
     </div>
   </footer>
-
+<!-- FOOTER:END -->
 </body>
 </html>
